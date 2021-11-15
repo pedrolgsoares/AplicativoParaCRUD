@@ -2,12 +2,14 @@ package com.pedrolgsoares.aplicativoparacrud.model;
 
 public class Pessoa {
 
+    private Long id;
     private String nomePessoa;
     private int contatoPessoa;
     private String emailPessoa;
 
 
-    public Pessoa(String nomePessoa, int contatoPessoa, String emailPessoa) {
+    public Pessoa(Long id, String nomePessoa, int contatoPessoa, String emailPessoa) {
+        this.id = id;
         this.nomePessoa = nomePessoa;
         this.contatoPessoa = contatoPessoa;
         this.emailPessoa = emailPessoa;
@@ -15,6 +17,14 @@ public class Pessoa {
 
     public Pessoa(){
 
+    }
+
+    public Long getId(){
+        return id;
+    }
+
+    public void setId(Long id){
+        this.id = id;
     }
 
     public String getNomePessoa() {
