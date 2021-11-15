@@ -2,10 +2,13 @@ package com.pedrolgsoares.aplicativoparacrud.DAO;
 
 import android.content.ContentValues;
 import android.content.Context;
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 
 import com.pedrolgsoares.aplicativoparacrud.model.Pessoa;
+
+import java.util.ArrayList;
 
 public class PessoaDAO extends SQLiteOpenHelper {
 
@@ -46,5 +49,25 @@ public class PessoaDAO extends SQLiteOpenHelper {
         // Aplicando os valores com o insert na tabela pessoas
         getWritableDatabase().insert("pessoas", null, values);
 
+    }
+    
+    // Listando os dados da tabela para serem exibidas
+    public ArrayList<Pessoa> getListDados(){
+        String[] columns = {"id", "nomepessoa", "contatopessoa", "emailpessoa"};
+        Cursor cursor = getWritableDatabase().query("pessoas", columns,null,null,null,null,null);
+
+        // mostrar os dados armzenados
+        ArrayList<Pessoa> pessoa = new ArrayList<>();
+        while (cursor.moveToNext()){
+            Pessoa p = new Pessoa();
+            p.setId(cursor.getLong(0));
+            p.setNomePessoa(cursor.getString(1));
+            p.setContatoPessoa(cursor.getInt(2));
+            p.setEmailPessoa(cursor.getString(3));
+
+            pessoa.add(p);
+        }
+        cursor.close();
+        return pessoa;
     }
 }
