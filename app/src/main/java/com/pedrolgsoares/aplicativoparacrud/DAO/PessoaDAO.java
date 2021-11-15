@@ -1,8 +1,11 @@
 package com.pedrolgsoares.aplicativoparacrud.DAO;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+
+import com.pedrolgsoares.aplicativoparacrud.model.Pessoa;
 
 public class PessoaDAO extends SQLiteOpenHelper {
 
@@ -30,6 +33,18 @@ public class PessoaDAO extends SQLiteOpenHelper {
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int i, int i1) {
         sqLiteDatabase.execSQL(SQL_DELETE_ENTRIES);
         onCreate(sqLiteDatabase);
+
+    }
+
+    // Salvando as informações no banco de dados
+    public void salvarDados(Pessoa pessoa){
+        ContentValues values = new ContentValues();
+        values.put("nomepessoa", pessoa.getNomePessoa());
+        values.put("contatopessoa", pessoa.getEmailPessoa());
+        values.put("emailpessoa", pessoa.getEmailPessoa());
+
+        // Aplicando os valores com o insert na tabela pessoas
+        getWritableDatabase().insert("pessoas", null, values);
 
     }
 }
