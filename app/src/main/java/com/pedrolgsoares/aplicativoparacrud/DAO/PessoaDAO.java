@@ -17,8 +17,7 @@ public class PessoaDAO extends SQLiteOpenHelper {
     
     // Criando a tabela
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE pessoas(id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL, " +
-                    "nomepessoa TEXT NOT NULL, contatopessoa TEXT NOT NULL, emailpessoa TEXT NOT NULL)";
+            "CREATE TABLE pessoas(id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL, nomepessoa TEXT NOT NULL, contatopessoa TEXT NOT NULL, emailpessoa TEXT NOT NULL);";
 
     // Excluindo a tabela
     private static final String SQL_DELETE_ENTRIES =
@@ -43,18 +42,36 @@ public class PessoaDAO extends SQLiteOpenHelper {
     public void salvarDados(Pessoa pessoa){
         ContentValues values = new ContentValues();
         values.put("nomepessoa", pessoa.getNomePessoa());
-        values.put("contatopessoa", pessoa.getEmailPessoa());
+        values.put("contatopessoa", pessoa.getContatoPessoa());
         values.put("emailpessoa", pessoa.getEmailPessoa());
 
         // Aplicando os valores com o insert na tabela pessoas
         getWritableDatabase().insert("pessoas", null, values);
 
     }
+
+    public void alterarDados(Pessoa pessoa){
+        ContentValues values = new ContentValues();
+        values.put("nomepessoa", pessoa.getNomePessoa());
+        values.put("contatopessoa", pessoa.getContatoPessoa());
+        values.put("emailpessoa", pessoa.getEmailPessoa());
+
+        // Aplicando os valores com update para alterar os dados
+        String [] args = {pessoa.getId().toString()};
+        getWritableDatabase().update("pessoas", values, "id=?", args);
+    }
+
+    public void deletarDados(Pessoa pessoa){
+
+        // Será somente necessário aplicar o comando delete para apagar  os dados
+        String [] args = {pessoa.getId().toString()};
+        getWritableDatabase().delete("pessoas", "id=?", args);
+    }
     
     // Listando os dados da tabela para serem exibidas
     public ArrayList<Pessoa> getListDados(){
         String[] columns = {"id", "nomepessoa", "contatopessoa", "emailpessoa"};
-        Cursor cursor = getWritableDatabase().query("pessoas", columns,null,null,null,null,null);
+        Cursor cursor = getWritableDatabase().query("pessoas", columns,null,null,null,null,null,null);
 
         // mostrar os dados armzenados
         ArrayList<Pessoa> pessoa = new ArrayList<>();

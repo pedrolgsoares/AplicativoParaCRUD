@@ -1,6 +1,8 @@
 package com.pedrolgsoares.aplicativoparacrud.model;
 
-public class Pessoa {
+import java.io.Serializable;
+
+public class Pessoa implements Serializable {
 
     private Long id;
     private String nomePessoa;
@@ -17,6 +19,11 @@ public class Pessoa {
 
     public Pessoa(){
 
+    }
+
+    @Override
+    public String toString() {
+        return nomePessoa.toString();
     }
 
     public Long getId(){
@@ -51,12 +58,4 @@ public class Pessoa {
         this.emailPessoa = emailPessoa;
     }
 
-    @Override
-    public String toString() {
-        return "Pessoa{" +
-                "nomePessoa='" + nomePessoa + '\'' +
-                ", contatoPessoa=" + contatoPessoa +
-                ", emailPessoa='" + emailPessoa + '\'' +
-                '}';
-    }
 }
