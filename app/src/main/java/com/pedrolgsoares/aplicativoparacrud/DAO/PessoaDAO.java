@@ -17,7 +17,7 @@ public class PessoaDAO extends SQLiteOpenHelper {
     
     // Criando a tabela
     private static final String SQL_CREATE_ENTRIES =
-            "CREATE TABLE pessoas(id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL, nomepessoa TEXT NOT NULL, contatopessoa TEXT NOT NULL, emailpessoa TEXT NOT NULL);";
+            "CREATE TABLE pessoas(id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL, nomepessoa INTEGER NOT NULL, contatopessoa TEXT NOT NULL, emailpessoa TEXT NOT NULL);";
 
     // Excluindo a tabela
     private static final String SQL_DELETE_ENTRIES =
