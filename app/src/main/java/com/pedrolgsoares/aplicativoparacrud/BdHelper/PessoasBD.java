@@ -1,4 +1,4 @@
-package com.pedrolgsoares.aplicativoparacrud.DAO;
+package com.pedrolgsoares.aplicativoparacrud.BdHelper;
 
 import android.content.ContentValues;
 import android.content.Context;
@@ -8,13 +8,13 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.pedrolgsoares.aplicativoparacrud.model.Pessoa;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class PessoaDAO extends SQLiteOpenHelper {
-
+public class PessoasBD extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "PessoaDAO.db";
-    
+
     // Criando a tabela
     private static final String SQL_CREATE_ENTRIES =
             "CREATE TABLE pessoas(id INTEGER PRIMARY KEY  AUTOINCREMENT NOT NULL, nomepessoa INTEGER NOT NULL, contatopessoa TEXT NOT NULL, emailpessoa TEXT NOT NULL);";
@@ -23,7 +23,7 @@ public class PessoaDAO extends SQLiteOpenHelper {
     private static final String SQL_DELETE_ENTRIES =
             "DROP TABLE IF EXISTS pessoas";
 
-    public PessoaDAO(Context context){
+    public PessoasBD(Context context){
         super(context,DATABASE_NAME, null, DATABASE_VERSION);
     }
     @Override
@@ -67,7 +67,7 @@ public class PessoaDAO extends SQLiteOpenHelper {
         String [] args = {pessoa.getId().toString()};
         getWritableDatabase().delete("pessoas", "id=?", args);
     }
-    
+
     // Listando os dados da tabela para serem exibidas
     public ArrayList<Pessoa> getListDados(){
         String[] columns = {"id", "nomepessoa", "contatopessoa", "emailpessoa"};

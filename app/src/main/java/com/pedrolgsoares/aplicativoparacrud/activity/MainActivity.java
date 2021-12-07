@@ -10,9 +10,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 
-import com.pedrolgsoares.aplicativoparacrud.DAO.PessoaDAO;
+import com.pedrolgsoares.aplicativoparacrud.BdHelper.PessoasBD;
 import com.pedrolgsoares.aplicativoparacrud.R;
-import com.pedrolgsoares.aplicativoparacrud.activity.FormularioPessoaActivity;
 import com.pedrolgsoares.aplicativoparacrud.model.Pessoa;
 
 import java.util.ArrayList;
@@ -21,7 +20,7 @@ public class MainActivity extends AppCompatActivity {
     // Instanciando os atributos da Main Activity
     private ListView listView_pessoas;
     private Pessoa pessoa;
-    private PessoaDAO pessoaDAO;
+    private PessoasBD pessoasBD;
     private ArrayList<Pessoa> listPessoa;
     private ArrayAdapter adapter;
     private Button button_cadastrar;
@@ -69,9 +68,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void loadList(){
-        pessoaDAO = new PessoaDAO(getApplicationContext());
-        listPessoa = pessoaDAO.getListDados();
-        pessoaDAO.close();
+        pessoasBD = new PessoasBD(getApplicationContext());
+        listPessoa = pessoasBD.getListDados();
+        pessoasBD.close();
 
         // Iniciando a condição de mostrar layout dos itens
         if(listPessoa != null){

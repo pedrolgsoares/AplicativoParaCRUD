@@ -7,8 +7,9 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Toast;
 
-import com.pedrolgsoares.aplicativoparacrud.DAO.PessoaDAO;
+import com.pedrolgsoares.aplicativoparacrud.BdHelper.PessoasBD;
 import com.pedrolgsoares.aplicativoparacrud.R;
 import com.pedrolgsoares.aplicativoparacrud.model.Pessoa;
 
@@ -21,7 +22,7 @@ public class FormularioPessoaActivity extends AppCompatActivity {
     private Pessoa edit_pessoa, pessoa;
 
     // Instanciando o banco de dados
-    private PessoaDAO pessoaDAO;
+    private PessoasBD pessoasBD;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,7 +31,7 @@ public class FormularioPessoaActivity extends AppCompatActivity {
 
         // Iniciando a classe do banco e o objeto
         pessoa = new Pessoa();
-        pessoaDAO = new PessoaDAO(getApplicationContext());
+        pessoasBD = new PessoasBD(getApplicationContext());
 
         editText_nome = findViewById(R.id.editText_nome);
         editText_contato = findViewById(R.id.editText_contato);
@@ -63,11 +64,17 @@ public class FormularioPessoaActivity extends AppCompatActivity {
                 pessoa.setEmailPessoa(editText_email.getText().toString());
 
                 if(button_salvar.getText().toString().equals("Cadastrar pesssoa")){
-                    pessoaDAO.salvarDados(pessoa);
-                    pessoaDAO.close();
+                    pessoasBD.salvarDados(pessoa);
+                    pessoasBD.close();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Cadastro realizado", Toast.LENGTH_LONG);
+                    toast.show();
+                    finish();
                 }else{
-                    pessoaDAO.alterarDados(pessoa);
-                    pessoaDAO.close();
+                    pessoasBD.alterarDados(pessoa);
+                    pessoasBD.close();
+                    Toast toast = Toast.makeText(getApplicationContext(), "Cadastro modificado", Toast.LENGTH_LONG);
+                    toast.show();
+                    finish();
                 }
             }
         });
