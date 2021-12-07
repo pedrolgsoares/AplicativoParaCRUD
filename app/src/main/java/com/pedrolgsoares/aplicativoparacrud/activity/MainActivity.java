@@ -2,8 +2,11 @@ package com.pedrolgsoares.aplicativoparacrud.activity;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.ContextMenu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -45,6 +48,16 @@ public class MainActivity extends AppCompatActivity {
 
             }
         });
+        registerForContextMenu(listView_pessoas);
+
+        // Aplicando clique longo no item para abrir a janela de delete
+        listView_pessoas.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener(){
+            @Override
+            public boolean onItemLongClick(AdapterView<?> adapterView, View view, int position, long id) {
+                pessoa = (Pessoa)adapterView.getItemAtPosition(position);
+                return false;
+            }
+        });
 
         button_cadastrar = findViewById(R.id.button_cadastrar);
 
@@ -65,6 +78,22 @@ public class MainActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         loadList();
+    }
+
+    // Aprecerá este menu após o clique longo
+    @Override
+    public void onCreateContextMenu(ContextMenu menu, View v, ContextMenu.ContextMenuInfo menuInfo) {
+        MenuItem menuDelete = menu.add("Deletar usuário");
+        menuDelete.setOnMenuItemClickListener(new MenuItem.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem item) {
+                pessoasBD = new PessoasBD(getApplicationContext());
+                pessoasBD.deletarDados(pessoa);
+                pessoasBD.close();
+                loadList();
+                return true;
+            }
+        });
     }
 
     public void loadList(){
